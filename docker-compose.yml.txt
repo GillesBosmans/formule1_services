@@ -1,0 +1,116 @@
+services:
+ mongo-results:
+  image: mongo:latest
+  ports:
+    - 27017:27017
+  volumes:
+    - mongodb_results_data:/data/db
+    
+ mysql-driver:
+  image: mysql:latest
+  ports:
+    - 3307:3306
+  volumes:
+    - mysql_driver_data:/var/lib/mysql
+  environment:
+   MYSQL_ROOT_PASSWORD: abc123
+
+ mysql-team:
+  image: mysql:latest
+  ports:
+    - 3308:3306
+  volumes:
+    - mysql_team_data:/var/lib/mysql
+  environment:
+   MYSQL_ROOT_PASSWORD: abc123
+   
+ mysql-track:
+  image: mysql:latest
+  ports:
+    - 3309:3306
+  volumes:
+    - mysql_track_data:/var/lib/mysql
+  environment:
+   MYSQL_ROOT_PASSWORD: abc123
+    
+ results-service:
+  depends_on:
+    - mongo-results
+  image: bricesey/results-service
+  ports:
+    - 8080:8080
+  links:
+    - mongo-results
+  environment:
+   MONGODB_PORT: 27017
+   MONGODB_HOST: mongo-results
+   
+ driver-service:
+  depends_on:
+    - mysql-driver
+  image: bricesey/driver-service
+  ports:
+    - 8082:8082
+  links:
+    - mysql-driver
+  environment:
+   MYSQL_DB_USERNAME: root
+   MYSQL_DB_PASSWORD: abc123
+   MYSQL_DB_HOST: mysql-driver
+   MYSQL_DB_PORT: 3306
+   
+ team-service:
+  depends_on:
+    - mysql-team
+  image: bricesey/team-service
+  ports:
+    - 8083:8082
+  links:
+    - mysql-team
+  environment:
+   MYSQL_DB_USERNAME: root
+   MYSQL_DB_PASSWORD: abc123
+   MYSQL_DB_HOST: mysql-team
+   MYSQL_DB_PORT: 3306
+ 
+ track-service:
+  depends_on:
+    - mysql-track
+  image: bricesey/track-service
+  ports:
+    - 8084:8082
+  links:
+    - mysql-track
+  environment:
+   MYSQL_DB_USERNAME: root
+   MYSQL_DB_PASSWORD: abc123
+   MYSQL_DB_HOST: mysql-driver
+   MYSQL_DB_PORT: 3306
+
+ results-service:
+  depends_on:
+    - driver-service
+    - track-service
+	- team-service
+  image: bricesey/results-service
+  ports:
+    - 8081:8081
+  links:
+    - driver-service
+    - track-service
+	- team-service
+  environment:
+   DRIVER_SERVICE_BASEURL: driver-service:8080
+   TEAM_SERVICE_BASEURL: team-service:8082
+   TRACK_SERVICE_BASEURL: track-service:8082
+   MYSQL_DB_USERNAME: root
+   MYSQL_DB_PASSWORD: abc123
+   MYSQL_DB_HOST: mongo-results
+   MYSQL_DB_PORT: 3306
+
+volumes:
+ mongodb_results_data:
+ mysql_driver_data:
+ mysql_team_data:
+ mysql_track_data
+ 
