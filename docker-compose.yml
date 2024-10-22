@@ -1,0 +1,41 @@
+services:
+ mysql-driver:
+  image: mysql:latest
+  ports:
+    - 3307:3306
+  volumes:
+    - mysql_driver_data:/var/lib/mysql
+  environment:
+   MYSQL_ROOT_PASSWORD: abc123
+
+ mysql-team:
+  image: mysql:latest
+  ports:
+    - 3308:3306
+  volumes:
+    - mysql_team_data:/var/lib/mysql
+  environment:
+   MYSQL_ROOT_PASSWORD: abc123
+   
+ mysql-track:
+  image: mysql:latest
+  ports:
+    - 3309:3306
+  volumes:
+    - mysql_track_data:/var/lib/mysql
+  environment:
+   MYSQL_ROOT_PASSWORD: abc123
+   
+ mongo-results:
+  image: mongo:latest
+  ports: 
+    - 27017:27017
+  volumes:
+    - mongodb_results_data:/data/db
+
+volumes:
+ mongodb_results_data:
+ mysql_driver_data:
+ mysql_team_data:
+ mysql_track_data:
+ 
