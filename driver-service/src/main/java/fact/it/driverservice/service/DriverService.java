@@ -21,26 +21,26 @@ public class DriverService {
     public void loadData() {
         if (driverRepository.count() == 0) {
             List<Driver> f1Drivers2023 = List.of(
-                    new Driver(null, "RedBull", "Max", "Verstappen", "Dutch", 33, 3),
-                    new Driver(null, "RedBull", "Sergio", "Perez", "Mexican", 11, 0),
-                    new Driver(null, "Mercedes", "Lewis", "Hamilton", "British", 44, 7),
-                    new Driver(null, "Mercedes", "George", "Russell", "British", 63, 0),
-                    new Driver(null, "Ferrari", "Charles", "Leclerc", "Monegasque", 16, 0),
-                    new Driver(null, "Ferrari", "Carlos", "Sainz", "Spanish", 55, 0),
-                    new Driver(null, "McLaren", "Lando", "Norris", "British", 4, 0),
-                    new Driver(null, "McLaren", "Oscar", "Piastri", "Australian", 81, 0),
-                    new Driver(null, "Alpine", "Esteban", "Ocon", "French", 31, 0),
-                    new Driver(null, "Alpine", "Pierre", "Gasly", "French", 10, 0),
-                    new Driver(null, "Aston Martin", "Fernando", "Alonso", "Spanish", 14, 2),
-                    new Driver(null, "Aston Martin", "Lance", "Stroll", "Canadian", 18, 0),
-                    new Driver(null, "AlphaTauri", "Yuki", "Tsunoda", "Japanese", 22, 0),
-                    new Driver(null, "AlphaTauri", "Daniel", "Ricciardo", "Australian", 3, 0),
-                    new Driver(null, "Williams", "Alex", "Albon", "Thai", 23, 0),
-                    new Driver(null, "Williams", "Logan", "Sargeant", "American", 2, 0),
-                    new Driver(null, "Alfa Romeo", "Valtteri", "Bottas", "Finnish", 77, 0),
-                    new Driver(null, "Alfa Romeo", "Guanyu", "Zhou", "Chinese", 24, 0),
-                    new Driver(null, "Haas", "Kevin", "Magnussen", "Danish", 20, 0),
-                    new Driver(null, "Haas", "Nico", "Hulkenberg", "German", 27, 0)
+                    new Driver(null, "RED", "Max", "Verstappen", "Dutch", 33, 3),
+                    new Driver(null, "RED", "Sergio", "Perez", "Mexican", 11, 0),
+                    new Driver(null, "MER", "Lewis", "Hamilton", "British", 44, 7),
+                    new Driver(null, "MER", "George", "Russell", "British", 63, 0),
+                    new Driver(null, "FER", "Charles", "Leclerc", "Monegasque", 16, 0),
+                    new Driver(null, "FER", "Carlos", "Sainz", "Spanish", 55, 0),
+                    new Driver(null, "MCL", "Lando", "Norris", "British", 4, 0),
+                    new Driver(null, "MCL", "Oscar", "Piastri", "Australian", 81, 0),
+                    new Driver(null, "ALP", "Esteban", "Ocon", "French", 31, 0),
+                    new Driver(null, "ALP", "Pierre", "Gasly", "French", 10, 0),
+                    new Driver(null, "AST", "Fernando", "Alonso", "Spanish", 14, 2),
+                    new Driver(null, "AST", "Lance", "Stroll", "Canadian", 18, 0),
+                    new Driver(null, "ALT", "Yuki", "Tsunoda", "Japanese", 22, 0),
+                    new Driver(null, "ALT", "Daniel", "Ricciardo", "Australian", 3, 0),
+                    new Driver(null, "WIL", "Alex", "Albon", "Thai", 23, 0),
+                    new Driver(null, "WIL", "Logan", "Sargeant", "American", 2, 0),
+                    new Driver(null, "ALF", "Valtteri", "Bottas", "Finnish", 77, 0),
+                    new Driver(null, "ALF", "Guanyu", "Zhou", "Chinese", 24, 0),
+                    new Driver(null, "HAA", "Kevin", "Magnussen", "Danish", 20, 0),
+                    new Driver(null, "HAA", "Nico", "Hulkenberg", "German", 27, 0)
             );
 
             driverRepository.saveAll(f1Drivers2023);
