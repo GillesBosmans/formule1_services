@@ -1,0 +1,7 @@
+package fact.it.trackservice.repository;
+
+import fact.it.trackservice.model.Track;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface TrackRepository extends JpaRepository<Track, Long> {
+}
