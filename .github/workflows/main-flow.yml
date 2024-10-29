@@ -1,95 +1,109 @@
 name: Build and deliver containers
 
-on:
-  push:
-    branches:
-      - main
+on: push
 
 jobs:
-  teamservice:
-    runs-on: ubuntu-latest
-    name: Java 17 build, test, deliver team-service container
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v3
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          java-version: 17
-          cache: maven
-          distribution: adopt
-      - name: Build, test and package project
-        working-directory: ./team-service
-        run: mvn package -DskipTests=true
-      - name: Docker login
-        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
-      - name: Docker Build
-        run: docker build -t ${{ secrets.DOCKER_USER }}/team-service:latest ./team-service
-      - name: Upload container to Docker Hub with Push
-        run: docker push ${{ secrets.DOCKER_USER }}/team-service:latest
-
   driverservice:
     runs-on: ubuntu-latest
     name: Java 17 build, test, deliver driver-service container
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
+
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           java-version: 17
           cache: maven
           distribution: adopt
+      
       - name: Build, test and package project
         working-directory: ./driver-service
-        run: mvn package -DskipTests=true
+        run: mvn package -B -DskipTests=true
+
       - name: Docker login
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
+
       - name: Docker Build
         run: docker build -t ${{ secrets.DOCKER_USER }}/driver-service:latest ./driver-service
+
       - name: Upload container to Docker Hub with Push
         run: docker push ${{ secrets.DOCKER_USER }}/driver-service:latest
-
-  resultsservice:
+  teamservice:
     runs-on: ubuntu-latest
-    name: Java 17 build, test, deliver results-service container
+    name: Java 17 build, test, deliver team-service container
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
+
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           java-version: 17
           cache: maven
           distribution: adopt
+
       - name: Build, test and package project
-        working-directory: ./results-service
-        run: mvn package -DskipTests=true
+        working-directory: ./team-service
+        run: mvn package -B -DskipTests=true
+
       - name: Docker login
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
-      - name: Docker Build
-        run: docker build -t ${{ secrets.DOCKER_USER }}/results-service:latest ./results-service
-      - name: Upload container to Docker Hub with Push
-        run: docker push ${{ secrets.DOCKER_USER }}/results-service:latest
 
+      - name: Docker Build
+        run: docker build -t ${{ secrets.DOCKER_USER }}/team-service:latest ./team-service
+
+      - name: Upload container to Docker Hub with Push
+        run: docker push ${{ secrets.DOCKER_USER }}/team-service:latest
   trackservice:
     runs-on: ubuntu-latest
     name: Java 17 build, test, deliver track-service container
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
+
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           java-version: 17
           cache: maven
           distribution: adopt
+        
       - name: Build, test and package project
         working-directory: ./track-service
-        run: mvn package -DskipTests=true
+        run: mvn package -B -DskipTests=true
+        
       - name: Docker login
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
+
       - name: Docker Build
         run: docker build -t ${{ secrets.DOCKER_USER }}/track-service:latest ./track-service
+
       - name: Upload container to Docker Hub with Push
         run: docker push ${{ secrets.DOCKER_USER }}/track-service:latest
+  resultsservice:
+    runs-on: ubuntu-latest
+    name: Java 17 build, test, deliver results-service container
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          cache: maven
+          distribution: adopt
+        
+      - name: Build, test and package project
+        working-directory: ./track-service
+        run: mvn package -B -DskipTests=true
+        
+      - name: Docker login
+        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Docker Build
+        run: docker build -t ${{ secrets.DOCKER_USER }}/results-service:latest ./results-service
+
+      - name: Upload container to Docker Hub with Push
+        run: docker push ${{ secrets.DOCKER_USER }}/results-service:latest
