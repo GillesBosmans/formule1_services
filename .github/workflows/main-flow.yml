@@ -22,11 +22,11 @@ jobs:
         working-directory: ./team-service
         run: mvn package -B
       - name: Docker login
-        run: docker login -u ${{ vars.DOCKERHUB_USER }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
       - name: Docker Build
-        run: docker build -t ${{ vars.DOCKERHUB_USER }}/team-service:latest ./team-service
+        run: docker build -t ${{ secrets.DOCKER_USER }}/team-service:latest ./team-service
       - name: Upload container to Docker Hub with Push
-        run: docker push ${{ vars.DOCKERHUB_USER }}/team-service:latest
+        run: docker push ${{ secrets.DOCKER_USER }}/team-service:latest
 
   driverservice:
     runs-on: ubuntu-latest
@@ -44,11 +44,11 @@ jobs:
         working-directory: ./driver-service
         run: mvn package -B
       - name: Docker login
-        run: docker login -u ${{ vars.DOCKERHUB_USER }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
       - name: Docker Build
-        run: docker build -t ${{ vars.DOCKERHUB_USER }}/driver-service:latest ./driver-service
+        run: docker build -t ${{ secrets.DOCKER_USER }}/driver-service:latest ./driver-service
       - name: Upload container to Docker Hub with Push
-        run: docker push ${{ vars.DOCKERHUB_USER }}/driver-service:latest
+        run: docker push ${{ secrets.DOCKER_USER }}/driver-service:latest
 
   resultsservice:
     runs-on: ubuntu-latest
@@ -66,11 +66,11 @@ jobs:
         working-directory: ./results-service
         run: mvn package -B
       - name: Docker login
-        run: docker login -u ${{ vars.DOCKERHUB_USER }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
       - name: Docker Build
-        run: docker build -t ${{ vars.DOCKERHUB_USER }}/results-service:latest ./results-service
+        run: docker build -t ${{ secrets.DOCKER_USER }}/results-service:latest ./results-service
       - name: Upload container to Docker Hub with Push
-        run: docker push ${{ vars.DOCKERHUB_USER }}/results-service:latest
+        run: docker push ${{ secrets.DOCKER_USER }}/results-service:latest
 
   trackservice:
     runs-on: ubuntu-latest
@@ -88,8 +88,8 @@ jobs:
         working-directory: ./track-service
         run: mvn package -B
       - name: Docker login
-        run: docker login -u ${{ vars.DOCKERHUB_USER }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
       - name: Docker Build
-        run: docker build -t ${{ vars.DOCKERHUB_USER }}/track-service:latest ./track-service
+        run: docker build -t ${{ secrets.DOCKER_USER }}/track-service:latest ./track-service
       - name: Upload container to Docker Hub with Push
-        run: docker push ${{ vars.DOCKERHUB_USER }}/track-service:latest
+        run: docker push ${{ secrets.DOCKER_USER }}/track-service:latest
