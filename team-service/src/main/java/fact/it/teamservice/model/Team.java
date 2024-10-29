@@ -17,6 +17,6 @@ public class Team {
     private String teamName;
     private String baseLocation;
     private String teamPrincipal;
-    private int yearEstablished;
-    private int championshipsWon;
+    private Integer yearEstablished;
+    private Integer championshipsWon;
 }
