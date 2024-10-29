@@ -96,7 +96,7 @@ jobs:
           distribution: adopt
         
       - name: Build, test and package project
-        working-directory: ./track-service
+        working-directory: ./results-service
         run: mvn package -B -DskipTests=true
         
       - name: Docker login
