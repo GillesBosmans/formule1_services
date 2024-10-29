@@ -33,9 +33,44 @@ services:
   volumes:
     - mongodb_results_data:/data/db
 
+ driver-service:
+  depends_on:
+    - mysql-driver
+  image: bricesey/driver-service
+  ports: 
+    - 8081:8081
+  volumes:
+    - mysql_driver_data:/var/lib/mysql
+
+ team-service:
+  depends_on:
+    - mysql-team
+  image: bricesey/team-service
+  ports: 
+    - 8082:8082
+  volumes:
+    - mysql_team_data:/var/lib/mysql
+
+ track-service:
+  depends_on:
+    - mysql-track
+  image: bricesey/track-service
+  ports: 
+    - 8083:8083
+  volumes:
+    - mysql_track_data:/var/lib/mysql
+
+ results-service:
+  depends_on:
+    - mongo-results
+  image: bricesey/results-service
+  ports: 
+    - 8084:8084
+  volumes:
+    - mongodb_results_data:/data/db
+
 volumes:
  mongodb_results_data:
  mysql_driver_data:
  mysql_team_data:
  mysql_track_data:
- 
