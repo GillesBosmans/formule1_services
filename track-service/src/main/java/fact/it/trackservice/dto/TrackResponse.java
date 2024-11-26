@@ -1,17 +1,13 @@
-package fact.it.trackservice.model;
+package fact.it.trackservice.dto;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
 import lombok.*;
 
-@Entity
-@Getter
-@Setter
-@AllArgsConstructor
+@Data
 @Builder
+@AllArgsConstructor
 @NoArgsConstructor
-public class Track {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class TrackResponse {
     private Long id;
     private String trackName;
     private String location;
