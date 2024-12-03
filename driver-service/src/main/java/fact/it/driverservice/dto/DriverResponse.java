@@ -1,17 +1,15 @@
-package fact.it.driverservice.model;
+package fact.it.driverservice.dto;
 
-import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Entity
-@Getter
-@Setter
+@Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class Driver {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class DriverResponse {
     private Long id;
     private String teamId;
     private String firstName;
