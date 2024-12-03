@@ -1,9 +1,13 @@
 package fact.it.teamservice.controller;
 
 
+import fact.it.teamservice.dto.TeamByIdResponse;
+import fact.it.teamservice.dto.TeamRequest;
+import fact.it.teamservice.dto.TeamResponse;
 import fact.it.teamservice.model.Team;
 import fact.it.teamservice.service.TeamService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,23 +21,28 @@ public class TeamController {
     private final TeamService teamService;
 
     @GetMapping
-    public List<Team> getAllTeams(){return teamService.getAllTeams();}
+    public List<TeamResponse> getAllTeams(){return teamService.getAllTeams();}
 
     @GetMapping("/{id}")
-    public ResponseEntity<Team> getTeamById(@PathVariable Long id){
-        Optional<Team> team = teamService.getTeamById(id);
+    public ResponseEntity<TeamByIdResponse> getTeamById(@PathVariable Long id){
+        Optional<TeamByIdResponse> team = teamService.getTeamById(id);
         return team.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
+    // Create a new team
     @PostMapping
-    public Team createTeam(@RequestBody Team team){return teamService.saveTeam(team);}
+    public ResponseEntity<Team> createTeam(@RequestBody TeamRequest teamRequest) {
+        Team createdTeam = teamService.saveTeam(teamRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdTeam);
+    }
 
+    // Update an existing team
     @PutMapping("/{id}")
-    public ResponseEntity<Team> updateTeam(@PathVariable Long id, @RequestBody Team updatedTeam){
+    public ResponseEntity<Team> updateTeam(@PathVariable Long id, @RequestBody TeamRequest updatedTeamRequest) {
         try {
-            Team team = teamService.updateTeam(id, updatedTeam);
-            return ResponseEntity.ok(team);
-        } catch (RuntimeException e){
+            Team updatedTeam = teamService.updateTeam(id, updatedTeamRequest);
+            return ResponseEntity.ok(updatedTeam);
+        } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
     }
