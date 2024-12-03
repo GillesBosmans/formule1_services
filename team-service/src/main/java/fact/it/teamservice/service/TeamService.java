@@ -1,6 +1,9 @@
 package fact.it.teamservice.service;
 
 
+import fact.it.teamservice.dto.TeamByIdResponse;
+import fact.it.teamservice.dto.TeamRequest;
+import fact.it.teamservice.dto.TeamResponse;
 import fact.it.teamservice.model.Team;
 import fact.it.teamservice.repository.TeamRepository;
 import jakarta.annotation.PostConstruct;
@@ -39,32 +42,69 @@ public class TeamService {
     }
 
     // Get all teams
-    public List<Team> getAllTeams() {
-        return teamRepository.findAll();
+    public List<TeamResponse> getAllTeams() {
+
+        List<Team> teams = teamRepository.findAll();
+        return teams.stream().map(this::mapToTeamResponse).toList();
     }
 
     // Get a single team by ID
-    public Optional<Team> getTeamById(Long id) {
-        return teamRepository.findById(id);
+    public Optional<TeamByIdResponse> getTeamById(Long id) {
+
+        return teamRepository.findById(id).map(this::mapToTeamByIdResponse);
     }
 
     // Create a new team
-    public Team saveTeam(Team team) {
+    public Team saveTeam(TeamRequest teamRequest) {
+        // Convert TeamRequest to Team object
+        Team team = Team.builder()
+                .teamAbbreviation(teamRequest.getTeamAbbreviation())
+                .teamName(teamRequest.getTeamName())
+                .baseLocation(teamRequest.getBaseLocation())
+                .teamPrincipal(teamRequest.getTeamPrincipal())
+                .yearEstablished(teamRequest.getYearEstablished())
+                .championshipsWon(teamRequest.getChampionshipsWon())
+                .build();
         return teamRepository.save(team);
     }
 
     // Update an existing team
-    public Team updateTeam(Long id, Team updatedTeam) {
-        return teamRepository.findById(id).map(team -> {
-            team.setTeamAbbreviation(updatedTeam.getTeamAbbreviation());
-            team.setTeamName(updatedTeam.getTeamName());
-            team.setBaseLocation(updatedTeam.getBaseLocation());
-            team.setTeamPrincipal(updatedTeam.getTeamPrincipal());
-            team.setYearEstablished(updatedTeam.getYearEstablished());
-            team.setChampionshipsWon(updatedTeam.getChampionshipsWon());
-            return teamRepository.save(team);
-        }).orElseThrow(() -> new RuntimeException("Driver not found"));
+    public Team updateTeam(Long id, TeamRequest updatedTeam) {
+        return teamRepository.findById(id)
+                .map(team -> {
+                    // Update team object with values from TeamRequest
+                    team.setTeamAbbreviation(updatedTeam.getTeamAbbreviation());
+                    team.setTeamName(updatedTeam.getTeamName());
+                    team.setBaseLocation(updatedTeam.getBaseLocation());
+                    team.setTeamPrincipal(updatedTeam.getTeamPrincipal());
+                    team.setYearEstablished(updatedTeam.getYearEstablished());
+                    team.setChampionshipsWon(updatedTeam.getChampionshipsWon());
+                    return teamRepository.save(team);
+                })
+                .orElseThrow(() -> new RuntimeException("Team not found"));
     }
 
+    //DTO
+    private TeamResponse mapToTeamResponse(Team team) {
+        return TeamResponse.builder()
+                .id(team.getId())
+                .teamName(team.getTeamName())
+                .teamAbbreviation(team.getTeamAbbreviation())
+                .teamPrincipal(team.getTeamPrincipal())
+                .baseLocation(team.getBaseLocation())
+                .championshipsWon(team.getChampionshipsWon())
+                .yearEstablished(team.getYearEstablished())
+                .build();
+    }
 
+    private TeamByIdResponse mapToTeamByIdResponse(Team team) {
+        return TeamByIdResponse.builder()
+                .teamName(team.getTeamName())
+                .teamAbbreviation(team.getTeamAbbreviation())
+                .teamPrincipal(team.getTeamPrincipal())
+                .baseLocation(team.getBaseLocation())
+                .championshipsWon(team.getChampionshipsWon())
+                .yearEstablished(team.getYearEstablished())
+                .build();
+    }
 }

@@ -1,18 +1,14 @@
-package fact.it.teamservice.model;
+package fact.it.teamservice.dto;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import jakarta.persistence.*;
-import lombok.*;
-
-@Entity
-@Getter
-@Setter
+@Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-@Table(name="teams")
-public class Team {
-    @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+public class TeamResponse {
     private Long id;
     private String teamAbbreviation;
     private String teamName;
