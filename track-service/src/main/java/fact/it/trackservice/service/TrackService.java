@@ -1,6 +1,8 @@
 package fact.it.trackservice.service;
 
 
+import fact.it.trackservice.dto.TrackRequest;
+import fact.it.trackservice.dto.TrackResponse;
 import fact.it.trackservice.model.Track;
 import fact.it.trackservice.repository.TrackRepository;
 import jakarta.annotation.PostConstruct;
@@ -51,13 +53,33 @@ public class TrackService {
     }
 
     // Get all tracks
-    public List<Track> getAllTracks() {
-        return trackRepository.findAll();
+    public List<TrackResponse> getAllTracks() {
+        List<Track> tracks = trackRepository.findAll();
+        return tracks.stream().map(this::mapToTrackResponse).toList();
     }
 
-    // Create a new driver
-    public Track saveTrack(Track track) {
+    // Create a new track
+    public Track saveTrack(TrackRequest trackRequest)
+    {   Track track = Track.builder()
+            .trackName(trackRequest.getTrackName())
+            .location(trackRequest.getLocation())
+            .country(trackRequest.getCountry())
+            .trackLengthKm(trackRequest.getTrackLengthKm())
+            .numberOfTurns(trackRequest.getNumberOfTurns())
+            .build();
         return trackRepository.save(track);
+    }
+
+    //DTO
+    private TrackResponse mapToTrackResponse(Track track) {
+        return TrackResponse.builder()
+                .id(track.getId())
+                .trackName(track.getTrackName())
+                .location(track.getLocation())
+                .country(track.getCountry())
+                .trackLengthKm(track.getTrackLengthKm())
+                .numberOfTurns(track.getNumberOfTurns())
+                .build();
     }
 
 }

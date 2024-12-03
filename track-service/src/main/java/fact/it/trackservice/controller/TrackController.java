@@ -1,6 +1,8 @@
 package fact.it.trackservice.controller;
 
 
+import fact.it.trackservice.dto.TrackRequest;
+import fact.it.trackservice.dto.TrackResponse;
 import fact.it.trackservice.model.Track;
 import fact.it.trackservice.service.TrackService;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +21,14 @@ public class TrackController {
 
     //Get all tracks
     @GetMapping
-    public List<Track> getAllTracks(){return trackService.getAllTracks();}
+    public List<TrackResponse> getAllTracks()
+    {
+        return trackService.getAllTracks();
+    }
 
     //Create a new track
     @PostMapping
-    public Track createTrack(@RequestBody Track track){return trackService.saveTrack(track);}
+    public Track createTrack(@RequestBody TrackRequest trackRequest){
+        return trackService.saveTrack(trackRequest);
+    }
 }
