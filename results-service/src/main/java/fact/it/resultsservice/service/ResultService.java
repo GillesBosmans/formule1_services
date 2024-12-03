@@ -1,5 +1,7 @@
 package fact.it.resultsservice.service;
 
+import fact.it.resultsservice.dto.ResultRequest;
+import fact.it.resultsservice.dto.ResultResponse;
 import fact.it.resultsservice.model.Result;
 import fact.it.resultsservice.repository.ResultRepository;
 import jakarta.annotation.PostConstruct;
@@ -98,16 +100,48 @@ public class ResultService {
         }
     }
 
-    public List<Result> getResults(){
-        return resultRepository.findAll();
-    }
+    //public List<Result> getResults(){
+      //  return resultRepository.findAll();
+    //}
 
-    public Optional<Result> getResultById(String id) {
-        return resultRepository.findById(id);
-    }
+    public Result addResult(ResultRequest resultRequest) {
+        Result result = Result.builder()
+                .id(resultRequest.getId())
+                .trackId(resultRequest.getTrackId())
+                .date(resultRequest.getDate())
+                .results(resultRequest.getResults().stream()
+                        .map(r -> Result.DriverResult.builder()
+                                .carNumber(r.getCarNumber())
+                                .position(r.getPosition())
+                                .fastestLap(r.isFastestLap())
+                                .lapsCompleted(r.getLapsCompleted())
+                                .points(r.getPoints())
+                                .build())
+                        .toList())
+                .build();
 
-
-    public Result addResult(Result result) {
         return resultRepository.save(result);
+    }
+
+    public ResultResponse getResultById(String id) {
+        return resultRepository.findById(id)
+                .map(this::mapResultResponse)
+                .orElseThrow(() -> new RuntimeException("Result not found"));
+    }
+
+    // DTO
+    private ResultResponse mapResultResponse(Result result) {
+        return ResultResponse.builder()
+                .id(result.getId())
+                .trackId(result.getTrackId())
+                .date(result.getDate())
+                .results(result.getResults().stream()
+                        .map(r -> ResultResponse.DriverResultResponse.builder()
+                                .carNumber(r.getCarNumber())
+                                .position(r.getPosition())
+                                .points(r.getPoints())
+                                .build())
+                        .toList())
+                .build();
     }
 }
