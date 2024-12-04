@@ -1,5 +1,7 @@
 package fact.it.driverservice.controller;
 
+import fact.it.driverservice.dto.DriverRequest;
+import fact.it.driverservice.dto.DriverResponse;
 import fact.it.driverservice.model.Driver;
 import fact.it.driverservice.service.DriverService;
 import lombok.RequiredArgsConstructor;
@@ -18,29 +20,27 @@ public class DriverController {
 
     // Get all drivers
     @GetMapping
-    public List<Driver> getAllDrivers() {
-        return driverService.getAllDrivers();
-    }
+    public List<DriverResponse> getAllDrivers() {return driverService.getAllDrivers();}
 
     // Get a driver by ID
     @GetMapping("/{id}")
-    public ResponseEntity<Driver> getDriverById(@PathVariable Long id) {
-        Optional<Driver> driver = driverService.getDriverById(id);
+    public ResponseEntity<DriverResponse> getDriverById(@PathVariable Long id) {
+        Optional<DriverResponse> driver = driverService.getDriverById(id);
         return driver.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     // Create a new driver
     @PostMapping
-    public Driver createDriver(@RequestBody Driver driver) {
-        return driverService.saveDriver(driver);
+    public DriverResponse createDriver(@RequestBody DriverRequest driverRequest) {
+        return driverService.saveDriver(driverRequest);
     }
 
     // Update an existing driver
     @PutMapping("/{id}")
-    public ResponseEntity<Driver> updateDriver(@PathVariable Long id, @RequestBody Driver updatedDriver) {
+    public ResponseEntity<DriverResponse> updateDriver(@PathVariable Long id, @RequestBody DriverRequest driverRequest) {
         try {
-            Driver driver = driverService.updateDriver(id, updatedDriver);
+            DriverResponse driver = driverService.updateDriver(id, driverRequest);
             return ResponseEntity.ok(driver);
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();

@@ -1,5 +1,7 @@
 package fact.it.driverservice.service;
 
+import fact.it.driverservice.dto.DriverRequest;
+import fact.it.driverservice.dto.DriverResponse;
 import fact.it.driverservice.model.Driver;
 import fact.it.driverservice.repository.DriverRepository;
 import jakarta.annotation.PostConstruct;
@@ -48,34 +50,71 @@ public class DriverService {
     }
 
     // Get all drivers
-    public List<Driver> getAllDrivers() {
-        return driverRepository.findAll();
+    //    public List<Driver> getAllDrivers() {
+    //        return driverRepository.findAll();
+    //    }
+
+    // Get a single driver by ID
+    //    public Optional<Driver> getDriverById(Long id) {
+    //        return driverRepository.findById(id);
+    //    }
+
+    // Get all drivers
+    public List<DriverResponse> getAllDrivers() {
+        List<Driver> driver = driverRepository.findAll();
+        return driver.stream().map(this::mapToDriverResponse).toList();
     }
 
     // Get a single driver by ID
-    public Optional<Driver> getDriverById(Long id) {
-        return driverRepository.findById(id);
+    public Optional<DriverResponse> getDriverById(Long id) {
+        Optional<Driver> driver = driverRepository.findById(id);
+        return driver.map(this::mapToDriverResponse);
     }
 
     // Create a new driver
-    public Driver saveDriver(Driver driver) {
-        return driverRepository.save(driver);
+    public DriverResponse saveDriver(DriverRequest driverRequest)
+    {   Driver driver = Driver.builder()
+            .teamId(driverRequest.getTeamId())
+            .firstName(driverRequest.getFirstName())
+            .lastName(driverRequest.getLastName())
+            .nationality(driverRequest.getNationality())
+            .carNumber(driverRequest.getCarNumber())
+            .championshipsWon(driverRequest.getChampionshipsWon())
+            .build();
+        Driver savedDriver = driverRepository.save(driver);
+        return mapToDriverResponse(savedDriver);
     }
 
     // Update an existing driver
-    public Driver updateDriver(Long id, Driver updatedDriver) {
-        return driverRepository.findById(id).map(driver -> {
-            driver.setFirstName(updatedDriver.getFirstName());
-            driver.setTeamId(updatedDriver.getTeamId());
-            driver.setNationality(updatedDriver.getNationality());
-            driver.setCarNumber(updatedDriver.getCarNumber());
-            driver.setChampionshipsWon(updatedDriver.getChampionshipsWon());
-            return driverRepository.save(driver);
-        }).orElseThrow(() -> new RuntimeException("Driver not found"));
+    public DriverResponse updateDriver(Long id, DriverRequest updatedDriver) {
+        Driver driver = driverRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Driver not found"));
+        driver.setFirstName(updatedDriver.getFirstName());
+        driver.setTeamId(updatedDriver.getTeamId());
+        driver.setNationality(updatedDriver.getNationality());
+        driver.setCarNumber(updatedDriver.getCarNumber());
+        driver.setChampionshipsWon(updatedDriver.getChampionshipsWon());
+
+        Driver savedDriver = driverRepository.save(driver);
+        return mapToDriverResponse(savedDriver);
     }
 
     // Delete a driver by ID
     public void deleteDriver(Long id) {
         driverRepository.deleteById(id);
+    }
+
+
+    //DTO
+    private DriverResponse mapToDriverResponse(Driver driver) {
+        return DriverResponse.builder()
+                .id(driver.getId())
+                .teamId(driver.getTeamId())
+                .firstName(driver.getFirstName())
+                .lastName(driver.getLastName())
+                .nationality(driver.getNationality())
+                .carNumber(driver.getCarNumber())
+                .championshipsWon(driver.getChampionshipsWon())
+                .build();
     }
 }
