@@ -16,24 +16,12 @@ public class SecurityConfig {
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity serverHttpSecurity) {
         serverHttpSecurity
-                .authorizeExchange(exchange ->
-                        exchange
-                                .pathMatchers(HttpMethod.GET,"/teams")
-                                .permitAll()
-                                .anyExchange()
-                                .authenticated()
-                                .pathMatchers(HttpMethod.GET,"/drivers")
-                                .permitAll()
-                                .anyExchange()
-                                .authenticated()
-                                .pathMatchers(HttpMethod.GET,"/tracks")
-                                .permitAll()
-                                .anyExchange()
-                                .authenticated()
-                                .pathMatchers(HttpMethod.GET,"/results")
-                                .permitAll()
-                                .anyExchange()
-                                .authenticated()
+                .authorizeExchange(exchange -> exchange
+                        .pathMatchers(HttpMethod.GET, "/teams").permitAll()
+                        .pathMatchers(HttpMethod.GET, "/drivers").permitAll()
+                        .pathMatchers(HttpMethod.GET, "/tracks").permitAll()
+                        .pathMatchers(HttpMethod.GET, "/result/{id}").permitAll()
+                        .anyExchange().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(withDefaults())
