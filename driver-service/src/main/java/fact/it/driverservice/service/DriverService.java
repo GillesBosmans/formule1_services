@@ -81,8 +81,8 @@ public class DriverService {
             .carNumber(driverRequest.getCarNumber())
             .championshipsWon(driverRequest.getChampionshipsWon())
             .build();
-        Driver savedDriver = driverRepository.save(driver);
-        return mapToDriverResponse(savedDriver);
+        driverRepository.save(driver);
+        return mapToDriverResponse(driver);
     }
 
     // Update an existing driver
