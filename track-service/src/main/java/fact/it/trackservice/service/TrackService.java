@@ -59,7 +59,7 @@ public class TrackService {
     }
 
     // Create a new track
-    public Track saveTrack(TrackRequest trackRequest)
+    public TrackResponse saveTrack(TrackRequest trackRequest)
     {   Track track = Track.builder()
             .trackName(trackRequest.getTrackName())
             .location(trackRequest.getLocation())
@@ -67,7 +67,9 @@ public class TrackService {
             .trackLengthKm(trackRequest.getTrackLengthKm())
             .numberOfTurns(trackRequest.getNumberOfTurns())
             .build();
-        return trackRepository.save(track);
+
+        trackRepository.save(track);
+        return mapToTrackResponse(track);
     }
 
     //DTO

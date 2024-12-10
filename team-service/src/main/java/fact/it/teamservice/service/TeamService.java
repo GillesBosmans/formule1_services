@@ -55,7 +55,7 @@ public class TeamService {
     }
 
     // Create a new team
-    public Team saveTeam(TeamRequest teamRequest) {
+    public TeamResponse saveTeam(TeamRequest teamRequest) {
         // Convert TeamRequest to Team object
         Team team = Team.builder()
                 .teamAbbreviation(teamRequest.getTeamAbbreviation())
@@ -65,7 +65,8 @@ public class TeamService {
                 .yearEstablished(teamRequest.getYearEstablished())
                 .championshipsWon(teamRequest.getChampionshipsWon())
                 .build();
-        return teamRepository.save(team);
+        teamRepository.save(team);
+        return mapToTeamResponse(team);
     }
 
     // Update an existing team
