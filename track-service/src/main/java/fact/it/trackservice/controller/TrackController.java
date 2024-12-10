@@ -28,7 +28,7 @@ public class TrackController {
 
     //Create a new track
     @PostMapping
-    public Track createTrack(@RequestBody TrackRequest trackRequest){
+    public TrackResponse createTrack(@RequestBody TrackRequest trackRequest){
         return trackService.saveTrack(trackRequest);
     }
 }
