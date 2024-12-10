@@ -1,0 +1,55 @@
+server:
+  port: 8088
+
+logging:
+  level:
+    root: INFO
+    org.springframework.cloud.gateway: INFO
+    org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator: INFO
+    reactor.netty: INFO
+    org.springframework.security: TRACE
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENTID}
+            client-secret: ${GOOGLE_CLIENTSECRET}
+            scope: openid,profile,email
+      resourceserver:
+        jwt:
+          issuer-uri: https://accounts.google.com
+          jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
+  cloud:
+    gateway:
+      routes:
+        - id: driver-service
+          uri: http://${DRIVER_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/drivers
+            - Method=GET
+          filters:
+            - SetPath=/api/drivers
+        - id: driver-service-create
+          uri: http://${DRIVER_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/drivers
+            - Method=POST
+          filters:
+            - SetPath=/api/drivers
+        - id: driver-service-edit
+          uri: http://${DRIVER_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/drivers/{id}
+            - Method=PUT
+          filters:
+            - SetPath=/api/drivers/{id}
+        - id: driver-service-delete
+          uri: http://${DRIVER_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/drivers/{id}
+            - Method=DELETE
+          filters:
+            - SetPath=/api/drivers/{id}
