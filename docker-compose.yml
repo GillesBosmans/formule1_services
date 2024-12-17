@@ -32,7 +32,16 @@ services:
       - 27017:27017
     volumes:
       - mongodb_results_data:/data/db
-
+      
+  redis:
+    image: redis/redis-stack-server:7.2.0-v6
+    ports:
+      - 6379:6379
+    healthcheck:
+      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
+    volumes:
+      - redis_data:/data
+      
   driver-service:
     depends_on:
       - mysql-driver
@@ -101,6 +110,7 @@ services:
       - team-service
       - track-service
       - results-service
+      - redis
     image: bricesey/api-gateway:latest
     ports:
       - 8088:8088
@@ -115,8 +125,10 @@ services:
       TRACK_SERVICE_BASEURL: track-service:8083
       RESULT_SERVICE_BASEURL: results-service:8084
 
+
 volumes:
   mongodb_results_data:
   mysql_driver_data:
   mysql_team_data:
   mysql_track_data:
+  redis_data:
