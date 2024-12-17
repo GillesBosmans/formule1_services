@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-results
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-results
+  template:
+    metadata:
+      labels:
+        app: mongo-results
+    spec:
+      containers:
+        - name: mongo-results
+          image: mongo:latest
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - mountPath: /data/db
+              name: mongo-results-storage
+      volumes:
+        - name: mongo-results-storage
+          persistentVolumeClaim:
+            claimName: mongo-results-pvc

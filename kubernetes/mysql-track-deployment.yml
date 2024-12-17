@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-track
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-track
+  template:
+    metadata:
+      labels:
+        app: mysql-track
+    spec:
+      containers:
+        - name: mysql-track
+          image: mysql:latest
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: "abc123"
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: mysql-track-storage
+      volumes:
+        - name: mysql-track-storage
+          persistentVolumeClaim:
+            claimName: mysql-track-pvc

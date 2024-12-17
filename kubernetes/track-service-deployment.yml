@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: track-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: track-service
+  template:
+    metadata:
+      labels:
+        app: track-service
+    spec:
+      containers:
+        - name: track-service
+          image: bricesey/track-service:latest
+          ports:
+            - containerPort: 8083
+          env:
+            - name: MYSQL_DB_HOST
+              value: mysql-track
+            - name: MYSQL_DB_PORT
+              value: "3306"
+            - name: MYSQL_DB_USERNAME
+              value: "root"
+            - name: MYSQL_DB_PASSWORD
+              value: "abc123"
