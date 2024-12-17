@@ -95,6 +95,26 @@ services:
       MONGODB_PORT: 27017
       MONGODB_HOST: mongo-results
 
+  api-gateway:
+    depends_on:
+      - driver-service
+      - team-service
+      - track-service
+      - results-service
+    image: bricesey/api-gateway:latest
+    ports:
+      - 8088:8088
+    links:
+      - driver-service
+      - team-service
+      - track-service
+      - results-service
+    environment:
+      DRIVER_SERVICE_BASEURL: driver-service:8081
+      TEAM_SERVICE_BASEURL: team-service:8082
+      TRACK_SERVICE_BASEURL: track-service:8083
+      RESULT_SERVICE_BASEURL: results-service:8084
+
 volumes:
   mongodb_results_data:
   mysql_driver_data:

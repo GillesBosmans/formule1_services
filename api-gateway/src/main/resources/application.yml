@@ -25,6 +25,28 @@ spring:
   cloud:
     gateway:
       routes:
+        - id: team-service
+          uri: http://${TEAM_SERVICE_BASEURL:localhost:8082}
+          predicates:
+            - Path=/teams
+            - Method=GET
+          filters:
+            - SetPath=/api/teams
+        - id: team-service-create
+          uri: http://${TEAM_SERVICE_BASEURL:localhost:8082}
+          predicates:
+            - Path=/teams
+            - Method=POST
+          filters:
+            - SetPath=/api/teams
+        - id: team-service-edit
+          uri: http://${TEAM_SERVICE_BASEURL:localhost:8082}
+          predicates:
+            - Path=/teams/{id}
+            - Method=PUT
+          filters:
+            - SetPath=/api/teams/{id}
+
         - id: driver-service
           uri: http://${DRIVER_SERVICE_BASEURL:localhost:8081}
           predicates:
@@ -53,3 +75,33 @@ spring:
             - Method=DELETE
           filters:
             - SetPath=/api/drivers/{id}
+
+        - id: track-service
+          uri: http://${TRACK_SERVICE_BASEURL:localhost:8083}
+          predicates:
+            - Path=/tracks
+            - Method=GET
+          filters:
+            - SetPath=/api/tracks
+        - id: track-service-create
+          uri: http://${TRACK_SERVICE_BASEURL:localhost:8083}
+          predicates:
+            - Path=/tracks
+            - Method=POST
+          filters:
+            - SetPath=/api/tracks
+
+        - id: result-service
+          uri: http://${RESULT_SERVICE_BASEURL:localhost:8084}
+          predicates:
+            - Path=result/{id}
+            - Method=GET
+          filters:
+            - SetPath=api/result/{id}
+        - id: result-service-create
+          uri: http://${RESULT_SERVICE_BASEURL:localhost:8084}
+          predicates:
+            - Path=/result
+            - Method=POST
+          filters:
+            - SetPath=/api/result
