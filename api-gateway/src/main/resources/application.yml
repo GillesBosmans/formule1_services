@@ -94,7 +94,7 @@ spring:
         - id: results-service
           uri: http://${RESULT_SERVICE_BASEURL:localhost:8084}
           predicates:
-            - Path=result/{id}
+            - Path=/result/{id}
             - Method=GET
           filters:
             - SetPath=/api/result/{id}
