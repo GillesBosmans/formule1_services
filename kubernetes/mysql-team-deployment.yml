@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-team
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-team
+  template:
+    metadata:
+      labels:
+        app: mysql-team
+    spec:
+      containers:
+        - name: mysql-team
+          image: mysql:latest
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: "abc123"
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: mysql-team-storage
+      volumes:
+        - name: mysql-team-storage
+          persistentVolumeClaim:
+            claimName: mysql-team-pvc

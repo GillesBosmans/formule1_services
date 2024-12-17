@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: team-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: team-service
+  template:
+    metadata:
+      labels:
+        app: team-service
+    spec:
+      containers:
+        - name: team-service
+          image: bricesey/team-service:latest
+          ports:
+            - containerPort: 8082
+          env:
+            - name: MYSQL_DB_HOST
+              value: mysql-team
+            - name: MYSQL_DB_PORT
+              value: "3306"
+            - name: MYSQL_DB_USERNAME
+              value: "root"
+            - name: MYSQL_DB_PASSWORD
+              value: "abc123"
