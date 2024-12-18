@@ -63,16 +63,27 @@ Om alles op te starten en soepel met elkaar te laten werken hebben we gebruik ge
 ## Postman
 De tool Postman is gebruikt voor het testen van de verschillende endpoints. Hieronder kan u screenshots terugvinden van elke endpoint die uitgevoerd wordt in postman.
 ### GET teams
+![postman screenshot](getTeams.png)
 ### POST teams
+![postman screenshot](postTeams.png)
 ### PUT teams
+![postman screenshot](putTeams.png)
 ### GET drivers
+![postman screenshot](getDrivers.png)
 ### POST drivers
+![postman screenshot](postDrivers.png)
 ### PUT drivers
+![postman screenshot](putDrivers.png)
 ### DELETE drivers/{id}
+![postman screenshot](deleteDrivers.png)
 ### GET tracks
+![postman screenshot](getTracks.png)
 ### POST tracks
+![postman screenshot](postTracks.png)
 ### GET result
+![postman screenshot](getResults.png)
 ### GET result/{id}
+![postman screenshot](getResultsById.png)
 ### POST result
-
+![postman screenshot](postResults.png)
 
