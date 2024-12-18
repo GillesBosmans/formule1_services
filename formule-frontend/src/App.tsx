@@ -5,7 +5,7 @@ import { jwtDecode } from "jwt-decode";
 import {GoogleOAuthProvider} from '@react-oauth/google';
 import {BrowserRouter, Routes} from 'react-router-dom';
 import Navbar from './components/Navbar.tsx';
-import {Toaster} from 'react-hot-toast';
+import toast, {Toaster} from 'react-hot-toast';
 import { Route } from 'react-router-dom';
 import Teams from './pages/Teams.tsx';
 import Drivers from './pages/Drivers.tsx';
@@ -32,7 +32,7 @@ function App() {
     };
 
     const handleLoginError = () => {
-        console.log('Login Failed');
+        toast.error('Login Failed');
     };
 
     const handleLogout = () => {

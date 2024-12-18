@@ -73,7 +73,7 @@ export default function Results({ user }: ResultsProps) {
             <div className="flex justify-between items-center mb-6 mt-20">
                 <h1 className="text-3xl font-bold flex items-center gap-2">
                     <Flag className="text-red-600" />
-                    Race Resultssss
+                    Race Results
                 </h1>
                 {user && (
                     <button

@@ -72,7 +72,7 @@ export default function Drivers({ user }: DriversProps) {
             <div className="flex justify-between items-center mb-6 mt-20">
                 <h1 className="text-3xl font-bold flex items-center gap-2">
                     <Users className="text-red-600" />
-                    F1 Drivers
+                    F1 Driversss
                 </h1>
                 {user && (
                     <button

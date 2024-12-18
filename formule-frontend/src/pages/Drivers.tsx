@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { getDrivers, createDriver, deleteDriver } from '../services/driverService.ts';
+import { getDrivers, deleteDriver } from '../services/driverService.ts';
 import { Driver, User } from '../models';
 import LoadingSpinner from '../components/LoadingSpinner';
 import {Users, Trash2, SquarePen} from 'lucide-react';
 import toast from 'react-hot-toast';
+import DriverFormModal from '../components/Forms/DriverFormModal.tsx';
 
 interface DriversProps {
     user: User | null;
@@ -13,6 +14,7 @@ export default function Drivers({ user }: DriversProps) {
     const [drivers, setDrivers] = useState<Driver[]>([]);
     const [loading, setLoading] = useState(true);
     const [showForm, setShowForm] = useState(false);
+    const [selectedDriver, setSelectedDriver] = useState<Driver | null>(null);
 
     useEffect(() => {
         fetchDrivers();
@@ -29,30 +31,6 @@ export default function Drivers({ user }: DriversProps) {
         }
     };
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const form = e.currentTarget;
-        const formData = new FormData(form);
-
-        try {
-            const newDriver = {
-                teamId: formData.get('teamId') as string,
-                firstName: formData.get('firstName') as string,
-                lastName: formData.get('lastName') as string,
-                nationality: formData.get('nationality') as string,
-                carNumber: Number(formData.get('carNumber')),
-                championshipsWon: Number(formData.get('championshipsWon')),
-            };
-
-            await createDriver(newDriver);
-            toast.success('Driver created successfully');
-            await fetchDrivers();
-            setShowForm(false);
-        } catch (error) {
-            toast.error('Failed to create driver');
-        }
-    };
-
     const handleDelete = async (id: number) => {
         if (!confirm('Are you sure you want to delete this driver?')) return;
 
@@ -65,16 +43,15 @@ export default function Drivers({ user }: DriversProps) {
         }
     };
 
-    const handleUpdate = async (id: number) => {
-        if (!confirm('Are you sure you want to delete this driver?')) return;
+    const handleFormSubmit = async (updatedDriver) => {
+        setShowForm(false);
+        await fetchDrivers();
+    };
 
-        try {
-            await deleteDriver(id);
-            toast.success('Driver deleted successfully');
-            await fetchDrivers();
-        } catch (error) {
-            toast.error('Failed to delete driver');
-        }
+    const handleUpdate = (driverId) => {
+        const driverToEdit = drivers.find((d) => d.id === driverId); // Example driver lookup
+        setSelectedDriver(driverToEdit);
+        setShowForm(true);
     };
 
     if (loading) return <LoadingSpinner />;
@@ -96,74 +73,12 @@ export default function Drivers({ user }: DriversProps) {
                 )}
             </div>
 
-            {showForm && (
-                <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md mb-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700">Team ID</label>
-                            <input
-                                type="text"
-                                name="teamId"
-                                required
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700">First Name</label>
-                            <input
-                                type="text"
-                                name="firstName"
-                                required
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700">Last Name</label>
-                            <input
-                                type="text"
-                                name="lastName"
-                                required
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700">Nationality</label>
-                            <input
-                                type="text"
-                                name="nationality"
-                                required
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700">Car Number</label>
-                            <input
-                                type="number"
-                                name="carNumber"
-                                required
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700">Championships Won</label>
-                            <input
-                                type="number"
-                                name="championshipsWon"
-                                required
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500"
-                            />
-                        </div>
-                    </div>
-                    <div className="mt-4">
-                        <button
-                            type="submit"
-                            className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700"
-                        >
-                            Create Driver
-                        </button>
-                    </div>
-                </form>
-            )}
+            <DriverFormModal
+                showForm={showForm}
+                onClose={() => setShowForm(false)}
+                onSubmit={handleFormSubmit}
+                driver={selectedDriver}
+            />
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {drivers.map((driver) => (
@@ -180,7 +95,11 @@ export default function Drivers({ user }: DriversProps) {
                                             <Trash2 size={20} />
                                         </button>
                                         <button
-                                            onClick={() => handleUpdate(driver.id)}
+                                            onClick={() => {
+                                                setShowForm(!showForm)
+                                                handleUpdate(driver.id)
+                                            }
+                                        }
                                             className="text-red-600 hover:text-red-700"
                                         >
                                             <SquarePen size={20} />
