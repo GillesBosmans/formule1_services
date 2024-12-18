@@ -23,7 +23,7 @@ public class SecurityConfig {
         serverHttpSecurity
                 .securityMatcher(ServerWebExchangeMatchers.anyExchange())
                 .authorizeExchange(exchange -> exchange
-                        .pathMatchers(HttpMethod.GET, "/teams", "/drivers", "/tracks", "/result/{id}").permitAll()
+                        .pathMatchers(HttpMethod.GET, "/teams", "/drivers", "/tracks", "/result/{id}", "/result").permitAll()
                         .anyExchange().authenticated()
                 )
                 .csrf(csrf -> csrf.csrfTokenRepository(null))  // Disable CSRF

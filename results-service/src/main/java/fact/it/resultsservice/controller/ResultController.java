@@ -18,11 +18,11 @@ import java.util.List;
 public class ResultController {
     private final ResultService resultService;
 
-//    @GetMapping
-//    @ResponseStatus(HttpStatus.OK)
-//    public List<Result> getAllResults(){
-//        return resultService.getResults();
-//    }
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<ResultResponse> getAllResults(){
+        return resultService.getResults();
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<ResultResponse> getResultById(@PathVariable String id) {
@@ -33,6 +33,8 @@ public class ResultController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
+
+
 
     @PostMapping
     public ResponseEntity<Result> addResult(@RequestBody ResultRequest resultRequest) {
