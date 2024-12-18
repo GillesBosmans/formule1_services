@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { getTeams } from '../services/teamService.ts';
 import {Team, User} from '../models';
 import LoadingSpinner from '../components/LoadingSpinner';
-import {Building2, SquarePen, Trash2} from 'lucide-react';
+import {Building2, SquarePen} from 'lucide-react';
 import toast from 'react-hot-toast';
 import TeamFormModal from '../components/Forms/TeamFormModal.tsx';
 
@@ -31,14 +31,14 @@ export default function Teams({ user }: TeamsProps) {
         }
     };
 
-    const handleFormSubmit = async (updatedTeam) => {
+    const handleFormSubmit = async () => {
         setShowForm(false);
         await fetchTeams();
     };
 
     const handleUpdate = (teamId) => {
         const teamToEdit = teams.find((d) => d.id === teamId);
-        setSelectedTeam(teamToEdit);
+        setSelectedTeam(teamToEdit ?? null);
         setShowForm(true);
     };
 

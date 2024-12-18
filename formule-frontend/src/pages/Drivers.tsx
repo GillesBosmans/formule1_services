@@ -43,14 +43,14 @@ export default function Drivers({ user }: DriversProps) {
         }
     };
 
-    const handleFormSubmit = async (updatedDriver) => {
+    const handleFormSubmit = async () => {
         setShowForm(false);
         await fetchDrivers();
     };
 
     const handleUpdate = (driverId) => {
         const driverToEdit = drivers.find((d) => d.id === driverId); // Example driver lookup
-        setSelectedDriver(driverToEdit);
+        setSelectedDriver(driverToEdit ?? null);
         setShowForm(true);
     };
 
