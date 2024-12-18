@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -100,9 +101,9 @@ public class ResultService {
         }
     }
 
-    //public List<Result> getResults(){
-      //  return resultRepository.findAll();
-    //}
+    public List<ResultResponse> getResults(){
+        return resultRepository.findAll().stream().map(this::mapResultResponse).toList();
+    }
 
     public Result addResult(ResultRequest resultRequest) {
         Result result = Result.builder()

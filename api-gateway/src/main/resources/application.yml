@@ -90,8 +90,14 @@ spring:
             - Method=POST
           filters:
             - SetPath=/api/tracks
-
-        - id: results-service
+        - id: result-service
+          uri: http://${RESULT_SERVICE_BASEURL:localhost:8084}
+          predicates:
+            - Path=/result
+            - Method=GET
+          filters:
+            - SetPath=/api/result
+        - id: results-service-byid
           uri: http://${RESULT_SERVICE_BASEURL:localhost:8084}
           predicates:
             - Path=/result/{id}

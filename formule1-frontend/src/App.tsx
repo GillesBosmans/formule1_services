@@ -10,6 +10,7 @@ import Drivers from './pages/Drivers';
 import Tracks from './pages/Tracks';
 import Results from './pages/Results';
 import { User } from './types';
+import Home from './pages/Home';
 
 function App() {
     const [user, setUser] = useState<User | null>(null);
@@ -53,7 +54,7 @@ function App() {
                             <Route path="/drivers" element={<Drivers user={user} />} />
                             <Route path="/tracks" element={<Tracks user={user} />} />
                             <Route path="/results" element={<Results user={user} />} />
-                            <Route path="/" element={<Teams user={user} />} />
+                            <Route path="/" element={<Home user={user} />} />
                         </Routes>
                     </main>
                     <Toaster position="top-right" />
