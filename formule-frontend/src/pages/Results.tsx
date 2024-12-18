@@ -51,7 +51,7 @@ export default function Results({ user }: ResultsProps) {
 
         try {
             // Prepare results dynamically from form data
-            const results = raceResults.map((result, index) => ({
+            const results = raceResults.map((_, index) => ({
                 carNumber: Number(formData.get(`carNumber${index + 1}`)),
                 position: index + 1,
                 points: Number(formData.get(`points${index + 1}`)),
