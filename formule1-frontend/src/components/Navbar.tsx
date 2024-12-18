@@ -16,7 +16,8 @@ export default function Navbar({ user, onLogout, onLoginSuccess, onLoginError }:
             <div className="max-w-7xl mx-auto px-4">
                 <div className="flex justify-between items-center h-20">
                     <div className="flex items-center space-x-12">
-                        <Link to="/" className="font-bold text-2xl">F1 Manager</Link>
+                        <Link to="/" className="font-bold text-2xl">
+                        <img src="/f1logo.png" alt="" className="w-auto h-8"/> Manager</Link>
                         <div className="hidden md:flex space-x-8">
                             <Link to="/teams" className="flex items-center space-x-2 hover:text-gray-200 text-lg">
                                 <Trophy size={24} />
