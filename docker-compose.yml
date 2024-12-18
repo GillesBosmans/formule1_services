@@ -1,4 +1,11 @@
 services:
+  formule-frontend:
+    image: bricesey/formule-frontend:latest
+    ports:
+      - 3000:3000
+    depends_on:
+      - api-gateway
+      
   mysql-driver:
     image: mysql:latest
     ports:
@@ -115,15 +122,7 @@ services:
       TRACK_SERVICE_BASEURL: track-service:8083
       RESULT_SERVICE_BASEURL: results-service:8084
 
-  react-frontend:
-    depends_on:
-      - api-gateway
-    build: ./formule1-frontend
-    container_name: react-frontend
-    ports:
-      - 3000:3000
-    stdin_open: true
-    tty: true
+
 
 volumes:
   mongodb_results_data:

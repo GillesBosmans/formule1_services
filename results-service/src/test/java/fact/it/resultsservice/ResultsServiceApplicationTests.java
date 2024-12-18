@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Optional;
 
@@ -26,6 +27,33 @@ public class ResultsServiceApplicationTests {
 
     @Mock
     private ResultRepository resultRepository;
+
+    @Test
+    public void testGetResults_Success() {
+        // Arrange
+        Result result1 = new Result();
+        result1.setId("1");
+        result1.setTrackId(101);
+        result1.setResults(Collections.emptyList());  // Ensure 'results' is initialized as an empty list
+
+        Result result2 = new Result();
+        result2.setId("2");
+        result2.setTrackId(202);
+        result2.setResults(Collections.emptyList());  // Ensure 'results' is initialized as an empty list
+
+        when(resultRepository.findAll()).thenReturn(Arrays.asList(result1, result2));
+
+        // Act
+        var response = resultService.getResults();
+
+        // Assert
+        assertNotNull(response);
+        assertEquals(2, response.size());
+        assertEquals("1", response.get(0).getId());
+        assertEquals("2", response.get(1).getId());
+        verify(resultRepository, times(1)).findAll();
+    }
+
 
     @Test
     public void testGetResultById_Success() {

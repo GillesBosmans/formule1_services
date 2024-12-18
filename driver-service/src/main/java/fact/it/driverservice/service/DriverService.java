@@ -90,6 +90,7 @@ public class DriverService {
         Driver driver = driverRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Driver not found"));
         driver.setFirstName(updatedDriver.getFirstName());
+        driver.setLastName(updatedDriver.getLastName());
         driver.setTeamId(updatedDriver.getTeamId());
         driver.setNationality(updatedDriver.getNationality());
         driver.setCarNumber(updatedDriver.getCarNumber());
