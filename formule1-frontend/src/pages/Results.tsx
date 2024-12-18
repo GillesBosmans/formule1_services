@@ -156,7 +156,7 @@ export default function Results({ user }: ResultsProps) {
                 {results.map((result) => (
                     <div key={result.id} className="bg-white rounded-lg shadow-md overflow-hidden">
                         <div className="p-6">
-                            <h3 className="text-xl font-bold mb-2">Race Results</h3>
+                            <h3 className="text-xl font-bold mb-2">Race Results {result.id}</h3>
                             <p className="text-gray-600 mb-4">
                                 Track ID: {result.trackId} | Date: {new Date(result.date).toLocaleDateString()}
                             </p>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getDrivers, createDriver, deleteDriver } from '../services/driverService.ts';
 import { Driver, User } from '../types';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { Users, Trash2 } from 'lucide-react';
+import {Users, Trash2, SquarePen} from 'lucide-react';
 import toast from 'react-hot-toast';
 
 interface DriversProps {
@@ -54,6 +54,18 @@ export default function Drivers({ user }: DriversProps) {
     };
 
     const handleDelete = async (id: number) => {
+        if (!confirm('Are you sure you want to delete this driver?')) return;
+
+        try {
+            await deleteDriver(id);
+            toast.success('Driver deleted successfully');
+            await fetchDrivers();
+        } catch (error) {
+            toast.error('Failed to delete driver');
+        }
+    };
+
+    const handleUpdate = async (id: number) => {
         if (!confirm('Are you sure you want to delete this driver?')) return;
 
         try {
@@ -160,12 +172,20 @@ export default function Drivers({ user }: DriversProps) {
                             <div className="flex justify-between items-start">
                                 <h3 className="text-xl font-bold mb-2">{`${driver.firstName} ${driver.lastName}`}</h3>
                                 {user && (
-                                    <button
-                                        onClick={() => handleDelete(driver.id)}
-                                        className="text-red-600 hover:text-red-700"
-                                    >
-                                        <Trash2 size={20} />
-                                    </button>
+                                    <div className="flex space-x-2">
+                                        <button
+                                            onClick={() => handleDelete(driver.id)}
+                                            className="text-red-600 hover:text-red-700"
+                                        >
+                                            <Trash2 size={20} />
+                                        </button>
+                                        <button
+                                            onClick={() => handleUpdate(driver.id)}
+                                            className="text-red-600 hover:text-red-700"
+                                        >
+                                            <SquarePen size={20} />
+                                        </button>
+                                    </div>
                                 )}
                             </div>
                             <p className="text-gray-600 mb-4">#{driver.carNumber}</p>
