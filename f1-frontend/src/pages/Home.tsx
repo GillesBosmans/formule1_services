@@ -30,7 +30,7 @@ export default function Homes({ user }: HomesProps) {
                 </div>
             ) : (
                 <div className="text-center">
-                    <h2 className="text-xl font-semibold text-gray-700">Please log in to manage your F1 team</h2>
+                    <h2 className="text-xl font-semibold text-gray-700">Please log in to manage your F1 teams</h2>
                 </div>
             )}
         </div>
