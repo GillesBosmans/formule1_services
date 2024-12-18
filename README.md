@@ -63,27 +63,27 @@ Om alles op te starten en soepel met elkaar te laten werken hebben we gebruik ge
 ## Postman
 De tool Postman is gebruikt voor het testen van de verschillende endpoints. Hieronder kan u screenshots terugvinden van elke endpoint die uitgevoerd wordt in postman.
 ### GET teams
-![postman screenshot](getTeams.png)
+![postman screenshot](/documentation/getTeams.png)
 ### POST teams
-![postman screenshot](postTeams.png)
+![postman screenshot](/documentation/postTeams.png)
 ### PUT teams
-![postman screenshot](putTeams.png)
+![postman screenshot](/documentation/putTeams.png)
 ### GET drivers
-![postman screenshot](getDrivers.png)
+![postman screenshot](/documentation/getDrivers.png)
 ### POST drivers
-![postman screenshot](postDrivers.png)
+![postman screenshot](/documentation/postDrivers.png)
 ### PUT drivers
-![postman screenshot](putDrivers.png)
+![postman screenshot](/documentation/putDrivers.png)
 ### DELETE drivers/{id}
-![postman screenshot](deleteDrivers.png)
+![postman screenshot](/documentation/deleteDrivers.png)
 ### GET tracks
-![postman screenshot](getTracks.png)
+![postman screenshot](/documentation/getTracks.png)
 ### POST tracks
-![postman screenshot](postTracks.png)
+![postman screenshot](/documentation/postTracks.png)
 ### GET result
-![postman screenshot](getResults.png)
+![postman screenshot](/documentation/getResults.png)
 ### GET result/{id}
-![postman screenshot](getResultsById.png)
+![postman screenshot](/documentation/getResultsById.png)
 ### POST result
-![postman screenshot](postResults.png)
+![postman screenshot](/documentation/postResults.png)
 
