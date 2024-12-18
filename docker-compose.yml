@@ -1,4 +1,11 @@
 services:
+  formule-frontend:
+    image: bricesey/formule-frontend:latest
+    ports:
+      - 3000:3000
+    depends_on:
+      - api-gateway
+      
   mysql-driver:
     image: mysql:latest
     ports:
