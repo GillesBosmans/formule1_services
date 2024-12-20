@@ -1,5 +1,5 @@
 # Micro-service Project Team 20
-In deze GitHub repository stellen wij, Gilles Bosmans en Brice Seymens ons micro-service project voor uit het opleidingsonderdeel Advanced Programming Topics. Het thema van dit project is Formula 1. Er zal dus met data van drivers, teams, tracks en results vanuit de prestige-discipline binnen de auto-sport gewerkt worden.
+In deze GitHub repository stellen wij, Gilles Bosmans en Brice Seymens ons micro-service project voor uit het opleidingsonderdeel Advanced Programming Topics. Het thema van dit project is Formula 1. Er zal dus met data van drivers, teams, tracks en results vanuit de prestige-discipline binnen de auto-sport gewerkt worden. Een demo-video kan u [hier](https://www.youtube.com/watch?v=dDBvbblOLmg) terugvinden.
 
 ## Structuur
 In onderstaand diagram kan u de hoofdstructuur in een schematische voorstelling terugvinden. Verdere uitleg over de verschillende onderdelen kan u terugvinden onder het diagram.
